@@ -1,36 +1,34 @@
 "use client";
-import { FC } from "react";
-import {
-  NavigationMenu,
-  NavigationMenuItem,
-  NavigationMenuLink,
-  NavigationMenuList,
-  navigationMenuTriggerStyle,
-} from "./ui/navigation-menu";
-import { map } from "lodash";
+import { map, toUpper } from "lodash";
+import Image from "next/image";
 import Link from "next/link";
+import { FC } from "react";
 
 const navigationMenuItems: { href: string; title: string }[] = [
   { href: "/", title: "Home" },
+  { href: "/users", title: "Users" },
 ];
 
 const Navbar: FC = () => {
   return (
-    <NavigationMenu>
-      <NavigationMenuList>
+    <div className="min-w-full flex flex-row justify-between items-center border-b-slate-500 border-b p-4 gap-x-8">
+      <Link href="/">
+        <Image src="logo.svg" alt="logo" height={100} width={100} />
+      </Link>
+      <div className="flex flex-row items-center gap-x-8">
         {...map(navigationMenuItems, (item) => {
           return (
-            <NavigationMenuItem>
-              <Link href={item.href} legacyBehavior passHref>
-                <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-                  {item.title}
-                </NavigationMenuLink>
-              </Link>
-            </NavigationMenuItem>
+            <Link
+              href={item.href}
+              key={item.title}
+              className="text-lg hover:text-slate-400"
+            >
+              {toUpper(item.title)}
+            </Link>
           );
         })}
-      </NavigationMenuList>
-    </NavigationMenu>
+      </div>
+    </div>
   );
 };
 
