@@ -1,7 +1,7 @@
-import { NextPage } from "next";
+import { NextPage } from 'next'
 
 const Users: NextPage = async () => {
-  return <h1>Users</h1>;
-};
+    return <h1>Users</h1>
+}
 
-export default Users;
+export default Users

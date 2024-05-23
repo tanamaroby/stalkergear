@@ -1,6 +1,6 @@
 export const GET = async (
-  _: Request,
-  { params }: { params: { id: string } },
+    _: Request,
+    { params }: { params: { id: string } },
 ) => {
-  const { id } = params;
-};
+    const { id } = params
+}
