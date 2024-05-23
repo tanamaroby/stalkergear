@@ -11,3 +11,6 @@ export interface User {
         link: string
     }
 }
+
+export const SESSION_STORAGE_PASSWORD_KEY = 'password'
+export const CORRECT_PASSWORD = 'tanama'

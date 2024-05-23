@@ -1,9 +1,9 @@
-import type { Metadata } from "next";
-import { Inter, Oswald, Roboto_Condensed } from "next/font/google";
-import "./globals.css";
-import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import Navbar from "@/components/Navbar";
 import { cn } from "@/lib/utils";
+import type { Metadata } from "next";
+import { Oswald } from "next/font/google";
+import "./globals.css";
 
 const oswald = Oswald({ subsets: ["latin"] });
 
@@ -19,9 +19,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className="min-h-screen flex">
-      <body className={cn(oswald.className, "flex flex-col flex-grow")} >
+      <body className={cn(oswald.className, "flex flex-col flex-grow")}>
         <Navbar />
-        <div className="p-4 flex-grow">{children}</div>
+        <div className="p-4 flex flex-col flex-grow">{children}</div>
         <Footer />
       </body>
     </html>
