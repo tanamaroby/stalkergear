@@ -11,7 +11,7 @@ const navigationMenuItems: { href: string; title: string }[] = [
 
 const Navbar: FC = () => {
   return (
-    <div className="min-w-full flex flex-row justify-between items-center border-b-slate-500 border-b p-4 gap-x-8">
+    <div className="flex flex-row justify-between items-center border-b-slate-500 border-b p-4 gap-x-8">
       <Link href="/">
         <Image src="logo.svg" alt="logo" height={100} width={100} />
       </Link>

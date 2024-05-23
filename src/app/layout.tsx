@@ -3,6 +3,7 @@ import { Inter, Oswald, Roboto_Condensed } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import { cn } from "@/lib/utils";
 
 const oswald = Oswald({ subsets: ["latin"] });
 
@@ -17,10 +18,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body className={oswald.className}>
+    <html lang="en" className="min-h-screen flex">
+      <body className={cn(oswald.className, "flex flex-col flex-grow")} >
         <Navbar />
-        <div className="p-4">{children}</div>
+        <div className="p-4 flex-grow">{children}</div>
         <Footer />
       </body>
     </html>

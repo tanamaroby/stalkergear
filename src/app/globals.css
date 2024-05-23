@@ -26,7 +26,6 @@ body {
     rgb(var(--background-start-rgb));
   padding-right: 16px;
   padding-left: 16px;
-  min-height: 100vh;
 }
 
 @layer utilities {
