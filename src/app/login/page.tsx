@@ -67,7 +67,7 @@ const Login: NextPage = () => {
                                         <FormControl>
                                             <Input
                                                 placeholder='Type password here'
-												type="password"
+                                                type='password'
                                                 {...field}
                                             />
                                         </FormControl>
