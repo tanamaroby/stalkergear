@@ -18,8 +18,8 @@ export default function RootLayout({
     children: React.ReactNode
 }>) {
     return (
-        <html lang='en' className='min-h-screen flex'>
-            <body className={cn(oswald.className, 'flex flex-col flex-grow')}>
+        <html lang='en' className='min-h-screen flex justify-center'>
+            <body className={cn(oswald.className, 'flex flex-col flex-grow max-w-[1080px]')}>
                 <Navbar />
                 <div className='p-4 flex flex-col flex-grow'>{children}</div>
                 <Footer />
