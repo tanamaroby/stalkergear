@@ -2,10 +2,10 @@ import Footer from '@/components/Footer'
 import Navbar from '@/components/Navbar'
 import { cn } from '@/lib/utils'
 import type { Metadata } from 'next'
-import { Oswald } from 'next/font/google'
+import { Kanit } from 'next/font/google'
 import './globals.css'
 
-const oswald = Oswald({ subsets: ['latin'] })
+const font = Kanit({ weight: '400', subsets: ['latin'] })
 
 export const metadata: Metadata = {
     title: 'Stalker Gear',
@@ -19,7 +19,12 @@ export default function RootLayout({
 }>) {
     return (
         <html lang='en' className='min-h-screen flex justify-center'>
-            <body className={cn(oswald.className, 'flex flex-col flex-grow')}>
+            <body
+                className={cn(
+                    font.className,
+                    'flex flex-col flex-grow max-w-[1500px]',
+                )}
+            >
                 <Navbar />
                 <div className='p-4 flex flex-col flex-grow'>{children}</div>
                 <Footer />

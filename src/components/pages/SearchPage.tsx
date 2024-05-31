@@ -93,7 +93,11 @@ export default function SearchPage() {
             ) : (
                 <div className='flex flex-row items-center justify-center'>
                     {map(users, (user) => (
-                        <UserCard key={user.login} user={user} />
+                        <UserCard
+                            className='max-w-[600px]'
+                            key={user.login}
+                            user={user}
+                        />
                     ))}
                 </div>
             )}

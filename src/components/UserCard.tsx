@@ -15,6 +15,7 @@ import {
 
 export interface UserCardProps {
     user: User
+    className?: string
 }
 
 function UserRow(props: { name: string; value: string }) {
@@ -32,10 +33,10 @@ function UserRow(props: { name: string; value: string }) {
 }
 
 export default function UserCard(props: UserCardProps) {
-    const { user } = props
+    const { user, className } = props
     const [loading, setLoading] = useState<boolean>(false)
     return (
-        <Card>
+        <Card className={className}>
             <CardHeader>
                 <CardTitle>{user.login}</CardTitle>
                 <CardDescription>ID: {user.id}</CardDescription>
