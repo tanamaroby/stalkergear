@@ -17,6 +17,8 @@ export const tokenParams = {
     scope: 'public',
 }
 
+export const SINGAPORE_CAMPUS_CODE = 64
+
 const { ClientCredentials } = simpleOauth2
 export const client = new ClientCredentials(config)
 

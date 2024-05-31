@@ -1,4 +1,5 @@
 'use client'
+import Logo from '@public/logo.svg'
 import { map, toUpper } from 'lodash'
 import Image from 'next/image'
 import Link from 'next/link'
@@ -13,7 +14,16 @@ const Navbar: FC = () => {
     return (
         <div className='flex flex-row justify-between items-center border-b-slate-500 border-b p-4 gap-x-8'>
             <Link href='/'>
-                <Image src='logo.svg' alt='logo' height={100} width={100} />
+                <Image
+                    src={Logo}
+                    alt='logo'
+                    height={100}
+                    width={100}
+                    priority
+                    style={{
+                        height: 'auto',
+                    }}
+                />
             </Link>
             <div className='flex flex-row items-center gap-x-8'>
                 {...map(navigationMenuItems, (item) => {

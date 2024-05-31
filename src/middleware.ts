@@ -8,6 +8,11 @@ export const middleware = (req: NextRequest) => {
     url.pathname = '/login'
     const password = cookiestore.get(SESSION_STORAGE_PASSWORD_KEY)
     if (!password) return NextResponse.redirect(url)
+    const currentUrl = req.nextUrl.clone()
+    if (currentUrl.pathname === '/users') {
+        currentUrl.pathname = '/users/1'
+        return NextResponse.redirect(currentUrl)
+    }
     return NextResponse.next()
 }
 
