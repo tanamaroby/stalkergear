@@ -38,7 +38,7 @@ export default function UserCard(props: UserCardProps) {
             <CardContent>
                 <div className='flex flex-col gap-y-4'>
                     <img
-                        src={user.image.link}
+                        src={user.image.versions.medium}
                         className='w-full aspect-square object-cover border-2 border-slate-500 rounded-md'
                     />
                     <div className='flex flex-col'>

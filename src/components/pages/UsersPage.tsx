@@ -60,7 +60,7 @@ export default function UsersPage(props: UsersPageProps) {
     const { users, page } = props
     return (
         <div className='flex flex-col gap-y-4'>
-            <div className='grid grid-cols-3 gap-4'>
+            <div className='grid lg:grid-cols-3 sm:grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-4'>
                 {map(users, (user) => {
                     return <UserCard key={user.id} user={user} />
                 })}

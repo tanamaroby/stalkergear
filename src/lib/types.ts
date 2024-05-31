@@ -12,7 +12,7 @@ export interface User {
     kind: string
     image: {
         link: string
-        versions: unknown
+        versions: Versions
     }
     'staff?': boolean
     correction_point: number
@@ -29,10 +29,32 @@ export interface User {
     'active?': boolean
 }
 
+export interface Versions {
+    large: string
+    medium: string
+    small: string
+    micro: string
+}
+
+export interface Cursus {
+    id: number
+    created_at: string
+    name: string
+    slug: string
+    kind: string
+}
+
+export interface Project {
+    id: number
+    name: string
+    slug: string
+    parent_id: number | null
+}
+
 export interface CursusUser {
     grade: string | null
     level: number
-    skills: unknown[]
+    skills: Skill[]
     blackholed_at: string | null
     id: number
     begin_at: string
@@ -41,8 +63,8 @@ export interface CursusUser {
     has_coalition: boolean
     created_at: string
     updated_at: string
-    user: unknown
-    cursus: unknown
+    user: User
+    cursus: Cursus
 }
 
 export interface ProjectUser {
@@ -52,8 +74,8 @@ export interface ProjectUser {
     status: string
     'validated?': boolean | null
     current_team_id: number
-    project: unknown
-    cursus_ids: unknown[]
+    project: Project
+    cursus_ids: number[]
     marked_at: string | null
     marked: boolean
     retriable_at: string | null
@@ -91,11 +113,19 @@ export interface ExpertiseUser {
     user_id: number
 }
 
+export interface Language {
+    id: number
+    name: string
+    identifier: string
+    created_at: string
+    updated_at: string
+}
+
 export interface Campus {
     id: number
     name: string
     time_zone: string
-    language: unknown
+    language: Language
     users_count: number
     vogsphere_id: number
     country: string
@@ -109,6 +139,12 @@ export interface Campus {
     public: boolean
     email_extension: string
     default_hidden_phone: boolean
+}
+
+export interface Skill {
+    id: number
+    name: string
+    level: number
 }
 
 export interface CampusUser {
@@ -134,12 +170,7 @@ export interface UserDetail {
     kind: string
     image: {
         link: string
-        versions: {
-            large: string
-            medium: string
-            small: string
-            micro: string
-        }
+        versions: Versions
     }
     'staff?': boolean
     correction_point: number

@@ -19,12 +19,7 @@ export default function RootLayout({
 }>) {
     return (
         <html lang='en' className='min-h-screen flex justify-center'>
-            <body
-                className={cn(
-                    oswald.className,
-                    'flex flex-col flex-grow max-w-[1500px]',
-                )}
-            >
+            <body className={cn(oswald.className, 'flex flex-col flex-grow')}>
                 <Navbar />
                 <div className='p-4 flex flex-col flex-grow'>{children}</div>
                 <Footer />
