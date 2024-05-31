@@ -8,6 +8,7 @@ import { FC } from 'react'
 const navigationMenuItems: { href: string; title: string }[] = [
     { href: '/', title: 'Home' },
     { href: '/users', title: 'Users' },
+    { href: '/search', title: 'Search' },
 ]
 
 const Navbar: FC = () => {

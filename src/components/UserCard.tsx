@@ -1,4 +1,8 @@
+'use client'
 import { User } from '@/lib/types'
+import Link from 'next/link'
+import { useState } from 'react'
+import { BeatLoader } from 'react-spinners'
 import { Button } from './ui/button'
 import {
     Card,
@@ -29,6 +33,7 @@ function UserRow(props: { name: string; value: string }) {
 
 export default function UserCard(props: UserCardProps) {
     const { user } = props
+    const [loading, setLoading] = useState<boolean>(false)
     return (
         <Card>
             <CardHeader>
@@ -38,7 +43,7 @@ export default function UserCard(props: UserCardProps) {
             <CardContent>
                 <div className='flex flex-col gap-y-4'>
                     <img
-                        src={user.image.versions.medium}
+                        src={user.image.link}
                         className='w-full aspect-square object-cover border-2 border-slate-500 rounded-md'
                     />
                     <div className='flex flex-col'>
@@ -50,7 +55,11 @@ export default function UserCard(props: UserCardProps) {
                 </div>
             </CardContent>
             <CardFooter>
-                <Button variant='outline'>Access</Button>
+                <Link href={`/users/${user.id}`}>
+                    <Button variant='outline' onClick={() => setLoading(true)}>
+                        {loading ? <BeatLoader color='white' /> : 'Access'}
+                    </Button>
+                </Link>
             </CardFooter>
         </Card>
     )
