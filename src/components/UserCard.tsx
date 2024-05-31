@@ -39,7 +39,7 @@ export default function UserCard(props: UserCardProps) {
                 <div className='flex flex-col gap-y-4'>
                     <img
                         src={user.image.link}
-                        className='w-full h-auto border-2 border-slate-500 rounded-md'
+                        className='w-full aspect-square object-cover border-2 border-slate-500 rounded-md'
                     />
                     <div className='flex flex-col'>
                         <UserRow name='First Name' value={user.first_name} />
