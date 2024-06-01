@@ -1,4 +1,5 @@
 'use client'
+import { Button } from '@/components/ui/button'
 import {
     FormControl,
     FormField,
@@ -76,6 +77,7 @@ const Login: NextPage = () => {
                                 )
                             }}
                         />
+                        <Button type='submit'>Submit</Button>
                     </form>
                 </FormProvider>
             </div>
