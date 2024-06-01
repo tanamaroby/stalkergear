@@ -2,7 +2,7 @@
 import { CursusUser } from '@/lib/types'
 import { cn } from '@/lib/utils'
 import dayjs from 'dayjs'
-import { first } from 'lodash'
+import { first, isNil } from 'lodash'
 import Link from 'next/link'
 import { useState } from 'react'
 import { BeatLoader } from 'react-spinners'
@@ -14,6 +14,7 @@ import { Label } from './ui/label'
 export interface UserCardProps {
     cursusUser: CursusUser
     className?: string
+    index?: number
 }
 
 function UserRow(props: {
@@ -31,12 +32,13 @@ function UserRow(props: {
 }
 
 export default function UserCard(props: UserCardProps) {
-    const { cursusUser, className } = props
+    const { cursusUser, className, index } = props
     const { user } = cursusUser
     const [loading, setLoading] = useState<boolean>(false)
     return (
         <Card className={className}>
             <div className='flex lg:flex-row flex-col items-center justify-center gap-6 p-6'>
+                {index ? <p className='text-2xl'>{index}</p> : null}
                 <Avatar className='border border-slate-300 h-[80px] w-[80px]'>
                     <AvatarImage
                         src={user?.image?.versions.medium}
@@ -80,6 +82,12 @@ export default function UserCard(props: UserCardProps) {
                                     : 'text-red-600'
                             }
                         />
+                        {!isNil(cursusUser.speed_index) ? (
+                            <UserRow
+                                name='Speed Index'
+                                value={cursusUser.speed_index.toFixed(2)}
+                            />
+                        ) : null}
                     </div>
                 </div>
                 <Link href={`https://profile.intra.42.fr/users/${user?.login}`}>

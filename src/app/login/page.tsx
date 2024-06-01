@@ -11,10 +11,13 @@ import { Label } from '@/components/ui/label'
 import { LoginFormData } from '@/lib/types/login'
 import { NextPage } from 'next'
 import Image from 'next/image'
+import { useState } from 'react'
 import { FormProvider, useForm } from 'react-hook-form'
+import { BeatLoader } from 'react-spinners'
 import { login } from './actions'
 
 const Login: NextPage = () => {
+    const [loading, setLoading] = useState(false)
     const form = useForm<LoginFormData>({
         defaultValues: {
             email: 'stalkergear@geekedout.com',
@@ -23,9 +26,11 @@ const Login: NextPage = () => {
     })
 
     const onSubmit = async (data: LoginFormData) => {
+        setLoading(true)
         const result = await login(data)
         if (result === 1)
             form.setError('password', { message: 'Invalid login credentials!' })
+        setLoading(false)
     }
 
     return (
@@ -80,7 +85,7 @@ const Login: NextPage = () => {
                             }}
                         />
                         <Button variant='outline' type='submit'>
-                            Submit
+                            {loading ? <BeatLoader color='white' /> : 'Submit'}
                         </Button>
                     </form>
                 </FormProvider>

@@ -65,6 +65,7 @@ export interface CursusUser {
     updated_at: string | null
     user: User | null
     cursus: Cursus | null
+    speed_index?: number
 }
 
 export interface ProjectUser {
