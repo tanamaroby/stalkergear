@@ -3,7 +3,7 @@ import { API_URL } from '@/lib/config'
 import { User } from '@/lib/types'
 import { zodResolver } from '@hookform/resolvers/zod'
 import axios from 'axios'
-import { isEmpty, map } from 'lodash'
+import { first, isEmpty, isNil, map } from 'lodash'
 import { SearchIcon } from 'lucide-react'
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
@@ -78,7 +78,7 @@ export default function SearchPage() {
                     />
                 </form>
             </Form>
-            {isEmpty(users) ? (
+            {isEmpty(users) || isNil(first(users)?.login) ? (
                 <div className='flex flex-grow items-center justify-center'>
                     {loading ? (
                         <PropagateLoader

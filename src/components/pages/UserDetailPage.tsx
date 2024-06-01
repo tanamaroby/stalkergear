@@ -60,7 +60,8 @@ export default function UserDetailPage(props: UserDetailPageProps) {
             {/* Image and User Details */}
             <div className='grid lg:grid-cols-3 gap-4 rounded-lg bg-gradient-to-br from-black to-slate-900'>
                 <img
-                    src={user.image.link}
+                    src={user.image?.link}
+                    alt='User Image'
                     className='lg:h-full w-full object-cover border border-slate-500 rounded-lg'
                 />
                 <Card className='w-full'>
