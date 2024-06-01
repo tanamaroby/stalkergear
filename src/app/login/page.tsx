@@ -7,49 +7,29 @@ import {
     FormMessage,
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
-import { CORRECT_PASSWORD, SESSION_STORAGE_PASSWORD_KEY } from '@/lib/types'
-import { zodResolver } from '@hookform/resolvers/zod'
-import { setCookie } from 'cookies-next'
+import { Label } from '@/components/ui/label'
+import { LoginFormData } from '@/lib/types/login'
 import { NextPage } from 'next'
 import Image from 'next/image'
-import { useRouter } from 'next/navigation'
 import { FormProvider, useForm } from 'react-hook-form'
-import zod from 'zod'
-
-export interface LoginFormProps {
-    password: string
-}
-
-const schema = zod
-    .object({
-        password: zod.string(),
-    })
-    .superRefine(({ password }, ctx) => {
-        if (password !== CORRECT_PASSWORD) {
-            ctx.addIssue({
-                code: 'custom',
-                message: "Invalid password! You're not babab!",
-                path: ['password'],
-            })
-        }
-    })
+import { login } from './actions'
 
 const Login: NextPage = () => {
-    const router = useRouter()
-    const form = useForm<zod.infer<typeof schema>>({
-        resolver: zodResolver(schema),
+    const form = useForm<LoginFormData>({
         defaultValues: {
+            email: 'stalkergear@geekedout.com',
             password: '',
         },
     })
 
-    const onSubmit = (data: zod.infer<typeof schema>) => {
-        setCookie(SESSION_STORAGE_PASSWORD_KEY, data.password, { secure: true })
-        router.push('/')
+    const onSubmit = async (data: LoginFormData) => {
+        const result = await login(data)
+        if (result === 1)
+            form.setError('password', { message: 'Invalid login credentials!' })
     }
 
     return (
-        <div className='flex flex-col gap-y-6 items-center justify-center flex-grow'>
+        <div className='flex flex-col gap-y-6 items-center justify-center flex-grow w-full'>
             <Image src='logo.svg' alt='logo' height='200' width='200' />
             <div className='flex flex-col gap-y-4 items-center justify-center'>
                 <p className='text-center'>Hi there! Welcome to StalkerGear!</p>
@@ -58,13 +38,35 @@ const Login: NextPage = () => {
                 </p>
                 <p className='text-center'>Please login below</p>
                 <FormProvider {...form}>
-                    <form onSubmit={form.handleSubmit(onSubmit)}>
+                    <form
+                        onSubmit={form.handleSubmit(onSubmit)}
+                        className='flex flex-col items-center justify-center gap-y-4 w-full'
+                    >
+                        <FormField
+                            control={form.control}
+                            name='email'
+                            render={({ field }) => {
+                                return (
+                                    <FormItem className='w-full'>
+                                        <Label>Email</Label>
+                                        <FormControl>
+                                            <Input
+                                                className='w-full'
+                                                {...field}
+                                            />
+                                        </FormControl>
+                                        <FormMessage className='text-red-500' />
+                                    </FormItem>
+                                )
+                            }}
+                        />
                         <FormField
                             control={form.control}
                             name='password'
                             render={({ field }) => {
                                 return (
-                                    <FormItem>
+                                    <FormItem className='w-full'>
+                                        <Label>Password</Label>
                                         <FormControl>
                                             <Input
                                                 placeholder='Type password here'
@@ -77,7 +79,9 @@ const Login: NextPage = () => {
                                 )
                             }}
                         />
-                        <Button type='submit'>Submit</Button>
+                        <Button variant='outline' type='submit'>
+                            Submit
+                        </Button>
                     </form>
                 </FormProvider>
             </div>

@@ -1,5 +1,6 @@
 import Footer from '@/components/Footer'
 import Navbar from '@/components/Navbar'
+import { Toaster } from '@/components/ui/toaster'
 import { cn } from '@/lib/utils'
 import type { Metadata } from 'next'
 import { Kanit } from 'next/font/google'
@@ -28,6 +29,7 @@ export default function RootLayout({
                 <Navbar />
                 <div className='p-4 flex flex-col flex-grow'>{children}</div>
                 <Footer />
+                <Toaster />
             </body>
         </html>
     )
