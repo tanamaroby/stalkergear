@@ -1,4 +1,4 @@
-import ErrorPage from '@/components/ErrorPage'
+import ErrorPage from '@/components/pages/ErrorPage'
 import UsersPage from '@/components/pages/UsersPage'
 import { CursusUser } from '@/lib/types'
 import { parseInt } from 'lodash'

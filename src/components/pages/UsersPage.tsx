@@ -71,9 +71,13 @@ export default function UsersPage(props: UsersPageProps) {
             </div>
             <Pagination>
                 <PaginationContent>
-                    <PaginationItem>
-                        <PaginationPrevious href={pageHrefMaker(page - 1)} />
-                    </PaginationItem>
+                    {page !== 1 ? (
+                        <PaginationItem>
+                            <PaginationPrevious
+                                href={pageHrefMaker(page - 1)}
+                            />
+                        </PaginationItem>
+                    ) : null}
                     {...createPaginationList(page)}
                     <PaginationItem>
                         <PaginationNext href={pageHrefMaker(page + 1)} />
