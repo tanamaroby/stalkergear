@@ -1,6 +1,6 @@
 import ErrorPage from '@/components/ErrorPage'
 import UsersPage from '@/components/pages/UsersPage'
-import { User } from '@/lib/types'
+import { CursusUser } from '@/lib/types'
 import { parseInt } from 'lodash'
 import { fetchAllUsers } from './actions'
 
@@ -15,5 +15,5 @@ export default async function Users(props: UsersPageProps) {
     const fallbackPage = page ? parseInt(page) : 1
     const { data, error } = await fetchAllUsers({ pageNumber: fallbackPage })
     if (!data || error) return <ErrorPage />
-    return <UsersPage users={data as User[]} page={fallbackPage} />
+    return <UsersPage cursusUsers={data as CursusUser[]} page={fallbackPage} />
 }

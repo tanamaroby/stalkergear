@@ -9,7 +9,7 @@ export const fetchAllUsers = async (props: FetchAllUsersProps) => {
     const supabase = createClient()
 
     const { data, error } = await supabase
-        .from('User')
+        .from('Cursus User')
         .select()
         .range((pageNumber - 1) * 30, pageNumber * 30)
     return { data, error }

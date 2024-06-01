@@ -1,5 +1,4 @@
-import UserDetailPage from '@/components/pages/UserDetailPage'
-import { MOCK_USER_DETAIL } from '@/mocks/users'
+import ErrorPage from '@/components/ErrorPage'
 
 export default async function UsersIdPage({
     params,
@@ -7,5 +6,6 @@ export default async function UsersIdPage({
     params: { id: number }
 }) {
     const { id } = params
-    return <UserDetailPage user={MOCK_USER_DETAIL} />
+    return <ErrorPage />
+    // return <UserDetailPage user={} />
 }

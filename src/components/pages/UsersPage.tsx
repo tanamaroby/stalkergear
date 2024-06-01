@@ -1,5 +1,5 @@
 'use client'
-import { User } from '@/lib/types'
+import { CursusUser } from '@/lib/types'
 import { map } from 'lodash'
 import UserCard from '../UserCard'
 import {
@@ -12,7 +12,7 @@ import {
 } from '../ui/pagination'
 
 export interface UsersPageProps {
-    users: User[]
+    cursusUsers: CursusUser[]
     page: number
 }
 
@@ -58,13 +58,15 @@ const createPaginationList = (page: number) => {
 }
 
 export default function UsersPage(props: UsersPageProps) {
-    const { users, page } = props
+    const { cursusUsers, page } = props
 
     return (
         <div className='flex flex-col gap-y-4'>
             <div className='flex flex-col gap-y-2'>
-                {map(users, (user) => {
-                    return <UserCard key={user.id} user={user} />
+                {map(cursusUsers, (cursusUser) => {
+                    return (
+                        <UserCard key={cursusUser.id} cursusUser={cursusUser} />
+                    )
                 })}
             </div>
             <Pagination>

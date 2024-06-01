@@ -35,17 +35,19 @@ const waitFor = (timeout: number) => {
 }
 
 const SINGAPORE_CAMPUS_CODE = 64
-const fetchUsersOnPage = async (pageNumber: number) => {
+const CURSUS_CODE = 21
+
+const fetchCursusUsersOnPage = async (pageNumber: number) => {
     let attempt_no = 1
-    const baseUrl = `https://api.intra.42.fr/v2/users?campus_id=${SINGAPORE_CAMPUS_CODE}`
+    const baseUrl = `https://api.intra.42.fr/v2/cursus_users?filter[campus_id]=${SINGAPORE_CAMPUS_CODE}`
     while (true) {
         console.log(
-            `Fetching all users (${(pageNumber - 1) * 30} - ${pageNumber * 30})... Attempt number: ` +
+            `Fetching all cursus users (${(pageNumber - 1) * 30} - ${pageNumber * 30})... Attempt number: ` +
                 attempt_no,
         )
         let buildingUrl = [
             baseUrl,
-            'filter[kind]=student',
+            `cursus_id=${CURSUS_CODE}`,
             `page=${pageNumber}`,
         ].join('&')
         try {
@@ -65,13 +67,13 @@ const fetchUsersOnPage = async (pageNumber: number) => {
     }
 }
 
-const fetchAllSingaporeUsers = async () => {
+const fetchAllSingaporeCursusUsers = async () => {
     let data = []
     let pageNumber = 1
     let fetch = true
     while (fetch) {
-        console.log('Fetching page: ', pageNumber)
-        const json = await (await fetchUsersOnPage(pageNumber)).json()
+        console.log('Fetching cursus page: ', pageNumber)
+        const json = await (await fetchCursusUsersOnPage(pageNumber)).json()
         if (isEmpty(json)) fetch = false
         pageNumber += 1
         data.push(...json)
@@ -80,9 +82,15 @@ const fetchAllSingaporeUsers = async () => {
 }
 
 const runAll = async () => {
-    const res = await fetchAllSingaporeUsers()
-    const db = await supabase.from('User').upsert(res)
-    console.log(db)
+    const res = await fetchAllSingaporeCursusUsers()
+    const db = await supabase.from('Cursus User').upsert(res)
+    console.log('Cursus User: ', db)
+}
+
+const test = async () => {
+    const res = await fetchAllSingaporeCursusUsers()
+    console.log(res)
 }
 
 runAll()
+// test()

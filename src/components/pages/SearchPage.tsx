@@ -1,8 +1,7 @@
 'use client'
-import { User } from '@/lib/types'
-import { MOCK_USERS } from '@/mocks/users'
+import { CursusUser } from '@/lib/types'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { first, isEmpty, isNil, map } from 'lodash'
+import { isEmpty, map } from 'lodash'
 import { SearchIcon } from 'lucide-react'
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
@@ -27,7 +26,7 @@ const formSchema = z.object({
 
 export default function SearchPage() {
     const [loading, setLoading] = useState<boolean>(false)
-    const [users, setUsers] = useState<User[]>([])
+    const [cursusUsers, setCursusUsers] = useState<CursusUser[]>([])
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
         defaultValues: {
@@ -38,8 +37,7 @@ export default function SearchPage() {
     const onSubmit = async (e: z.infer<typeof formSchema>) => {
         const { search } = e
         setLoading(true)
-        setUsers([])
-        setUsers(MOCK_USERS)
+        setCursusUsers([])
         setLoading(false)
     }
 
@@ -76,7 +74,7 @@ export default function SearchPage() {
                     />
                 </form>
             </Form>
-            {isEmpty(users) || isNil(first(users)?.login) ? (
+            {isEmpty(cursusUsers) ? (
                 <div className='flex flex-grow items-center justify-center'>
                     {loading ? (
                         <PropagateLoader
@@ -90,11 +88,11 @@ export default function SearchPage() {
                 </div>
             ) : (
                 <div className='flex flex-row items-center justify-center'>
-                    {map(users, (user) => (
+                    {map(cursusUsers, (cursusUser, i) => (
                         <UserCard
                             className='max-w-[600px]'
-                            key={user.login}
-                            user={user}
+                            key={`${cursusUser.user?.login}-${i}`}
+                            cursusUser={cursusUser}
                         />
                     ))}
                 </div>

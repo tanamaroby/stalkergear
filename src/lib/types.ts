@@ -53,18 +53,18 @@ export interface Project {
 
 export interface CursusUser {
     grade: string | null
-    level: number
-    skills: Skill[]
+    level: number | null
+    skills: Skill[] | null
     blackholed_at: string | null
-    id: number
-    begin_at: string
+    id: number | null
+    begin_at: string | null
     end_at: string | null
-    cursus_id: number
-    has_coalition: boolean
-    created_at: string
-    updated_at: string
-    user: User
-    cursus: Cursus
+    cursus_id: number | null
+    has_coalition: boolean | null
+    created_at: string | null
+    updated_at: string | null
+    user: User | null
+    cursus: Cursus | null
 }
 
 export interface ProjectUser {

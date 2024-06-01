@@ -9,87 +9,51 @@ export type Json =
 export type Database = {
   public: {
     Tables: {
-      User: {
+      "Cursus User": {
         Row: {
-          "active?": boolean | null
-          "alumni?": boolean | null
-          alumnized_at: string | null
-          anonymize_date: string | null
-          correction_point: number | null
+          begin_at: string | null
+          blackholed_at: string | null
           created_at: string | null
-          data_erasure_date: string | null
-          displayname: string | null
-          email: string | null
-          first_name: string | null
+          cursus: Json | null
+          cursus_id: number | null
+          end_at: string | null
+          grade: string | null
+          has_coalition: boolean | null
           id: number
-          image: Json | null
-          kind: string | null
-          last_name: string | null
-          location: string | null
-          login: string | null
-          phone: string | null
-          pool_month: string | null
-          pool_year: string | null
-          "staff?": boolean | null
+          level: number | null
+          skills: Json | null
           updated_at: string | null
-          url: string | null
-          usual_first_name: string | null
-          usual_full_name: string | null
-          wallet: number | null
+          user: Json | null
         }
         Insert: {
-          "active?"?: boolean | null
-          "alumni?"?: boolean | null
-          alumnized_at?: string | null
-          anonymize_date?: string | null
-          correction_point?: number | null
+          begin_at?: string | null
+          blackholed_at?: string | null
           created_at?: string | null
-          data_erasure_date?: string | null
-          displayname?: string | null
-          email?: string | null
-          first_name?: string | null
+          cursus?: Json | null
+          cursus_id?: number | null
+          end_at?: string | null
+          grade?: string | null
+          has_coalition?: boolean | null
           id?: number
-          image?: Json | null
-          kind?: string | null
-          last_name?: string | null
-          location?: string | null
-          login?: string | null
-          phone?: string | null
-          pool_month?: string | null
-          pool_year?: string | null
-          "staff?"?: boolean | null
+          level?: number | null
+          skills?: Json | null
           updated_at?: string | null
-          url?: string | null
-          usual_first_name?: string | null
-          usual_full_name?: string | null
-          wallet?: number | null
+          user?: Json | null
         }
         Update: {
-          "active?"?: boolean | null
-          "alumni?"?: boolean | null
-          alumnized_at?: string | null
-          anonymize_date?: string | null
-          correction_point?: number | null
+          begin_at?: string | null
+          blackholed_at?: string | null
           created_at?: string | null
-          data_erasure_date?: string | null
-          displayname?: string | null
-          email?: string | null
-          first_name?: string | null
+          cursus?: Json | null
+          cursus_id?: number | null
+          end_at?: string | null
+          grade?: string | null
+          has_coalition?: boolean | null
           id?: number
-          image?: Json | null
-          kind?: string | null
-          last_name?: string | null
-          location?: string | null
-          login?: string | null
-          phone?: string | null
-          pool_month?: string | null
-          pool_year?: string | null
-          "staff?"?: boolean | null
+          level?: number | null
+          skills?: Json | null
           updated_at?: string | null
-          url?: string | null
-          usual_first_name?: string | null
-          usual_full_name?: string | null
-          wallet?: number | null
+          user?: Json | null
         }
         Relationships: []
       }
