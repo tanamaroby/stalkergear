@@ -1,7 +1,12 @@
 'use client'
 import { CursusUser } from '@/lib/types'
-import { map } from 'lodash'
+import { SELECT_OPTIONS, UsersFormData } from '@/lib/types/users-form'
+import { compact, isEmpty, map } from 'lodash'
+import { usePathname, useRouter } from 'next/navigation'
+import { useForm } from 'react-hook-form'
 import UserCard from '../UserCard'
+import { Button } from '../ui/button'
+import { Form, FormControl, FormField, FormItem, FormLabel } from '../ui/form'
 import {
     Pagination,
     PaginationContent,
@@ -10,6 +15,13 @@ import {
     PaginationNext,
     PaginationPrevious,
 } from '../ui/pagination'
+import {
+    Select,
+    SelectContent,
+    SelectItem,
+    SelectTrigger,
+    SelectValue,
+} from '../ui/select'
 
 export interface UsersPageProps {
     cursusUsers: CursusUser[]
@@ -59,9 +71,76 @@ const createPaginationList = (page: number) => {
 
 export default function UsersPage(props: UsersPageProps) {
     const { cursusUsers, page } = props
+    const pathname = usePathname()
+    const router = useRouter()
+
+    // FORMS
+    const form = useForm<UsersFormData>({
+        defaultValues: {
+            sort: SELECT_OPTIONS[0].value,
+        },
+    })
+
+    const onSubmit = (e: UsersFormData) => {
+        const { sort } = e
+        const buildingParams = compact([sort ? `sort=${sort}` : undefined])
+        const realPathname = !isEmpty(buildingParams)
+            ? `${pathname}?`
+            : pathname
+        router.push(
+            `${realPathname}${!isEmpty(buildingParams) ? buildingParams.join('&') : ''}`,
+        )
+    }
 
     return (
-        <div className='flex flex-col gap-y-4'>
+        <div className='flex flex-col gap-y-6'>
+            <Form {...form}>
+                <form
+                    onSubmit={form.handleSubmit(onSubmit)}
+                    className='flex flex-col gap-y-2'
+                >
+                    <FormField
+                        control={form.control}
+                        name='sort'
+                        render={({ field }) => {
+                            return (
+                                <FormItem>
+                                    <FormLabel>Sort Users</FormLabel>
+                                    <Select
+                                        onValueChange={field.onChange}
+                                        defaultValue={field.value}
+                                    >
+                                        <FormControl>
+                                            <SelectTrigger>
+                                                <SelectValue placeholder='Select a sort for users' />
+                                            </SelectTrigger>
+                                        </FormControl>
+                                        <SelectContent className='bg-black'>
+                                            {map(SELECT_OPTIONS, (option) => {
+                                                const { title, value } = option
+                                                return (
+                                                    <SelectItem
+                                                        key={value}
+                                                        value={value}
+                                                    >
+                                                        {title}
+                                                    </SelectItem>
+                                                )
+                                            })}
+                                        </SelectContent>
+                                    </Select>
+                                </FormItem>
+                            )
+                        }}
+                    />
+                    <Button
+                        type='submit'
+                        className='bg-white text-black hover:bg-slate-500'
+                    >
+                        Submit
+                    </Button>
+                </form>
+            </Form>
             <div className='flex flex-col gap-y-2'>
                 {map(cursusUsers, (cursusUser) => {
                     return (

@@ -11,9 +11,12 @@ interface UsersPageProps {
 }
 
 export default async function Users(props: UsersPageProps) {
-    const { page } = props.searchParams
+    const { page, sort } = props.searchParams
     const fallbackPage = page ? parseInt(page) : 1
-    const { data, error } = await fetchAllUsers({ pageNumber: fallbackPage })
+    const { data, error } = await fetchAllUsers({
+        pageNumber: fallbackPage,
+        sort,
+    })
     if (!data || error) return <ErrorPage />
     return <UsersPage cursusUsers={data as CursusUser[]} page={fallbackPage} />
 }
