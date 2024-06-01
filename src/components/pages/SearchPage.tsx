@@ -1,8 +1,7 @@
 'use client'
-import { API_URL } from '@/lib/config'
 import { User } from '@/lib/types'
+import { MOCK_USERS } from '@/mocks/users'
 import { zodResolver } from '@hookform/resolvers/zod'
-import axios from 'axios'
 import { first, isEmpty, isNil, map } from 'lodash'
 import { SearchIcon } from 'lucide-react'
 import { useState } from 'react'
@@ -40,8 +39,7 @@ export default function SearchPage() {
         const { search } = e
         setLoading(true)
         setUsers([])
-        const { data } = await axios.get(`${API_URL}/users?login=${search}`)
-        setUsers(data)
+        setUsers(MOCK_USERS)
         setLoading(false)
     }
 

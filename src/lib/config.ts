@@ -21,6 +21,3 @@ export const SINGAPORE_CAMPUS_CODE = 64
 
 const { ClientCredentials } = simpleOauth2
 export const client = new ClientCredentials(config)
-
-export const BASE_URL = 'http://localhost:3000'
-export const API_URL = 'http://localhost:3000/api'
