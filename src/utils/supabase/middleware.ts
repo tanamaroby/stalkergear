@@ -1,5 +1,4 @@
 import { createServerClient, type CookieOptions } from '@supabase/ssr'
-import { isEmpty } from 'lodash'
 import { NextRequest, NextResponse } from 'next/server'
 
 export async function updateSession(request: NextRequest) {
@@ -59,7 +58,7 @@ export async function updateSession(request: NextRequest) {
     const user = await supabase.auth.getUser()
 
     const url = request.nextUrl.clone()
-    if (!isEmpty(user.error) && url.pathname != '/login') {
+    if (user.error && url.pathname != '/login') {
         url.pathname = '/login'
         return NextResponse.redirect(url)
     }

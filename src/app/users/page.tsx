@@ -1,6 +1,8 @@
+import ErrorPage from '@/components/ErrorPage'
 import UsersPage from '@/components/pages/UsersPage'
-import { MOCK_USERS } from '@/mocks/users'
+import { User } from '@/lib/types'
 import { parseInt } from 'lodash'
+import { fetchAllUsers } from './actions'
 
 interface UsersPageProps {
     searchParams: {
@@ -10,6 +12,8 @@ interface UsersPageProps {
 
 export default async function Users(props: UsersPageProps) {
     const { page } = props.searchParams
-    const fallbackPage = page ?? 1
-    return <UsersPage users={MOCK_USERS} page={parseInt(fallbackPage)} />
+    const fallbackPage = page ? parseInt(page) : 1
+    const { data, error } = await fetchAllUsers({ pageNumber: fallbackPage })
+    if (!data || error) return <ErrorPage />
+    return <UsersPage users={data as User[]} page={fallbackPage} />
 }

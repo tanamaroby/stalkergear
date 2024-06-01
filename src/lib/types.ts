@@ -1,32 +1,32 @@
 export interface User {
     id: number
-    email: string
-    login: string
-    first_name: string
-    last_name: string
-    usual_full_name: string
+    email: string | null
+    login: string | null
+    first_name: string | null
+    last_name: string | null
+    usual_full_name: string | null
     usual_first_name: string | null
-    url: string
-    phone: string
-    displayname: string
-    kind: string
+    url: string | null
+    phone: string | null
+    displayname: string | null
+    kind: string | null
     image: {
         link: string
         versions: Versions
-    }
-    'staff?': boolean
-    correction_point: number
-    pool_month: string
-    pool_year: string
+    } | null
+    'staff?': boolean | null
+    correction_point: number | null
+    pool_month: string | null
+    pool_year: string | null
     location: string | null
-    wallet: number
-    anonymize_date: string
-    data_erasure_date: string
-    created_at: string
-    updated_at: string
+    wallet: number | null
+    anonymize_date: string | null
+    data_erasure_date: string | null
+    created_at: string | null
+    updated_at: string | null
     alumnized_at: string | null
-    'alumni?': boolean
-    'active?': boolean
+    'alumni?': boolean | null
+    'active?': boolean | null
 }
 
 export interface Versions {
