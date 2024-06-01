@@ -23,7 +23,7 @@ export default function RootLayout({
             <body
                 className={cn(
                     font.className,
-                    'flex flex-col flex-grow max-w-[1500px]',
+                    'flex flex-col flex-grow max-w-[1300px]',
                 )}
             >
                 <Navbar />

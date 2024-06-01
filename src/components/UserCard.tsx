@@ -49,32 +49,40 @@ export default function UserCard(props: UserCardProps) {
                     </AvatarFallback>
                 </Avatar>
                 <div className='flex flex-col lg:flex-row gap-6 flex-grow items-center justify-between'>
-                    <CardHeader className='p-0'>
+                    <CardHeader className='p-0 lg:w-[200px]'>
                         <CardTitle>{user?.login}</CardTitle>
                         <CardDescription>ID: {user?.id}</CardDescription>
                     </CardHeader>
-                    <UserRow name='Level' value={cursusUser.level} />
-                    <UserRow
-                        name='Eval Points'
-                        value={user?.correction_point}
-                    />
-                    <UserRow
-                        name='Blackhole'
-                        value={dayjs(cursusUser.blackholed_at)
-                            .toDate()
-                            .toDateString()}
-                    />
-                    <UserRow
-                        name='Active?'
-                        value={user?.['active?'] ? 'TRUE' : 'FALSE'}
-                        className={
-                            user?.['active?']
-                                ? 'text-green-600'
-                                : 'text-red-600'
-                        }
-                    />
+                    <div className='flex flex-col lg:flex-row gap-4 items-center justify-between flex-grow'>
+                        <UserRow name='Level' value={cursusUser.level} />
+                        <UserRow
+                            name='Eval Points'
+                            value={user?.correction_point}
+                        />
+                        <UserRow
+                            name='Blackhole'
+                            value={dayjs(cursusUser.blackholed_at)
+                                .toDate()
+                                .toDateString()}
+                            className={
+                                dayjs(cursusUser.blackholed_at).diff(dayjs()) <
+                                0
+                                    ? 'text-red-600'
+                                    : 'text-green-600'
+                            }
+                        />
+                        <UserRow
+                            name='Active?'
+                            value={user?.['active?'] ? 'TRUE' : 'FALSE'}
+                            className={
+                                user?.['active?']
+                                    ? 'text-green-600'
+                                    : 'text-red-600'
+                            }
+                        />
+                    </div>
                 </div>
-                <Link href={`/users/${user?.id}`}>
+                <Link href={`https://profile.intra.42.fr/users/${user?.login}`}>
                     <Button variant='outline' onClick={() => setLoading(true)}>
                         {loading ? <BeatLoader color='white' /> : 'Access'}
                     </Button>
