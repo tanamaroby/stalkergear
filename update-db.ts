@@ -1,11 +1,11 @@
+import { createClient } from '@supabase/supabase-js'
 import axios from 'axios'
 import dotenv from 'dotenv'
-import { isEmpty, size } from 'lodash'
+import { isEmpty } from 'lodash'
 import simpleOauth2 from 'simple-oauth2'
+import { Database } from './src/lib/types/supabase'
 
 dotenv.config()
-
-const SINGAPORE_CAMPUS_CODE = 64
 
 const tokenParams = {
     scope: 'public',
@@ -22,7 +22,11 @@ const config = {
 }
 
 const { ClientCredentials } = simpleOauth2
-export const client = new ClientCredentials(config)
+const client = new ClientCredentials(config)
+const supabase = createClient<Database>(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+)
 
 const waitFor = (timeout: number) => {
     return new Promise((resolve) => {
@@ -30,6 +34,7 @@ const waitFor = (timeout: number) => {
     })
 }
 
+const SINGAPORE_CAMPUS_CODE = 64
 const fetchUsersOnPage = async (pageNumber: number) => {
     let attempt_no = 1
     const baseUrl = `https://api.intra.42.fr/v2/users?campus_id=${SINGAPORE_CAMPUS_CODE}`
@@ -65,6 +70,7 @@ const fetchAllSingaporeUsers = async () => {
     let pageNumber = 1
     let fetch = true
     while (fetch) {
+        console.log('Fetching page: ', pageNumber)
         const json = await (await fetchUsersOnPage(pageNumber)).json()
         if (isEmpty(json)) fetch = false
         pageNumber += 1
@@ -73,7 +79,10 @@ const fetchAllSingaporeUsers = async () => {
     return data
 }
 
-fetchAllSingaporeUsers().then((data) => {
-    console.log(data)
-    console.log('Size: ', size(data))
-})
+const runAll = async () => {
+    const res = await fetchAllSingaporeUsers()
+    const db = await supabase.from('User').upsert(res)
+    console.log(db)
+}
+
+runAll()
