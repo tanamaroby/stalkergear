@@ -1,5 +1,6 @@
 export interface UsersFormData {
     sort: string
+	login: string
 }
 
 export const SELECT_OPTIONS: {

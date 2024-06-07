@@ -2,11 +2,12 @@
 import { CursusUser } from '@/lib/types'
 import { SELECT_OPTIONS, UsersFormData } from '@/lib/types/users-form'
 import { compact, isEmpty, map } from 'lodash'
-import { usePathname, useRouter } from 'next/navigation'
+import { ReadonlyURLSearchParams, usePathname, useRouter, useSearchParams } from 'next/navigation'
 import { useForm } from 'react-hook-form'
 import UserCard from '../UserCard'
 import { Button } from '../ui/button'
 import { Form, FormControl, FormField, FormItem, FormLabel } from '../ui/form'
+import { Input } from '../ui/input'
 import {
     Pagination,
     PaginationContent,
@@ -28,41 +29,43 @@ export interface UsersPageProps {
     page: number
 }
 
-const pageHrefMaker = (page: number) => {
-    return `/users?page=${page}`
+const pageHrefMaker = (page: number, pathname: ReadonlyURLSearchParams) => {
+	const searchParams = new URLSearchParams(pathname.toString())
+	searchParams.set('page', page.toString())
+    return `/users?${searchParams.toString()}`
 }
 
-const createPaginationList = (page: number) => {
+const createPaginationList = (page: number, pathname: ReadonlyURLSearchParams) => {
     if (page <= 2) {
         return [
             <PaginationItem>
-                <PaginationLink href={pageHrefMaker(1)} isActive={page === 1}>
+                <PaginationLink href={pageHrefMaker(1, pathname)} isActive={page === 1}>
                     1
                 </PaginationLink>
             </PaginationItem>,
             <PaginationItem>
-                <PaginationLink href={pageHrefMaker(2)} isActive={page === 2}>
+                <PaginationLink href={pageHrefMaker(2, pathname)} isActive={page === 2}>
                     2
                 </PaginationLink>
             </PaginationItem>,
             <PaginationItem>
-                <PaginationLink href={pageHrefMaker(3)}>3</PaginationLink>
+                <PaginationLink href={pageHrefMaker(3, pathname)}>3</PaginationLink>
             </PaginationItem>,
         ]
     }
     return [
         <PaginationItem>
-            <PaginationLink href={pageHrefMaker(page - 1)}>
+            <PaginationLink href={pageHrefMaker(page - 1, pathname)}>
                 {page - 1}
             </PaginationLink>
         </PaginationItem>,
         <PaginationItem>
-            <PaginationLink href={pageHrefMaker(page)} isActive>
+            <PaginationLink href={pageHrefMaker(page, pathname)} isActive>
                 {page}
             </PaginationLink>
         </PaginationItem>,
         <PaginationItem>
-            <PaginationLink href={pageHrefMaker(page + 1)}>
+            <PaginationLink href={pageHrefMaker(page + 1, pathname)}>
                 {page + 1}
             </PaginationLink>
         </PaginationItem>,
@@ -73,17 +76,22 @@ export default function UsersPage(props: UsersPageProps) {
     const { cursusUsers, page } = props
     const pathname = usePathname()
     const router = useRouter()
+	const searchParams = useSearchParams()
 
     // FORMS
     const form = useForm<UsersFormData>({
         defaultValues: {
-            sort: SELECT_OPTIONS[0].value,
+            sort: searchParams.get('sort') ? searchParams.get('sort')?.replace(' ', '+') : SELECT_OPTIONS[0].value,
+            login: '',
         },
     })
 
     const onSubmit = (e: UsersFormData) => {
-        const { sort } = e
-        const buildingParams = compact([sort ? `sort=${sort}` : undefined])
+        const { sort, login } = e
+        const buildingParams = compact([
+            sort ? `sort=${sort}` : undefined,
+            login ? `login=${login}` : undefined,
+        ])
         const realPathname = !isEmpty(buildingParams)
             ? `${pathname}?`
             : pathname
@@ -133,6 +141,23 @@ export default function UsersPage(props: UsersPageProps) {
                             )
                         }}
                     />
+                    <FormField
+                        control={form.control}
+                        name='login'
+                        render={({ field }) => {
+                            return (
+                                <FormItem>
+                                    <FormLabel>Login</FormLabel>
+                                    <FormControl>
+                                        <Input
+                                            placeholder='Search for users...'
+                                            {...field}
+                                        />
+                                    </FormControl>
+                                </FormItem>
+                            )
+                        }}
+                    />
                     <Button
                         type='submit'
                         className='bg-white text-black hover:bg-slate-500'
@@ -153,13 +178,13 @@ export default function UsersPage(props: UsersPageProps) {
                     {page !== 1 ? (
                         <PaginationItem>
                             <PaginationPrevious
-                                href={pageHrefMaker(page - 1)}
+                                href={pageHrefMaker(page - 1, searchParams)}
                             />
                         </PaginationItem>
                     ) : null}
-                    {...createPaginationList(page)}
+                    {...createPaginationList(page, searchParams)}
                     <PaginationItem>
-                        <PaginationNext href={pageHrefMaker(page + 1)} />
+                        <PaginationNext href={pageHrefMaker(page + 1, searchParams)} />
                     </PaginationItem>
                 </PaginationContent>
             </Pagination>

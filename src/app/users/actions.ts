@@ -5,10 +5,11 @@ import { map, replace, split } from 'lodash'
 export interface FetchAllUsersProps {
     pageNumber: number
     sort?: string
+    login?: string
 }
 
 export const fetchAllUsers = async (props: FetchAllUsersProps) => {
-    const { pageNumber, sort } = props
+    const { pageNumber, sort, login } = props
     const supabase = createClient()
 
     const [inputSort, inputOrder] = sort ? split(sort, '-') : [null, null]
@@ -20,12 +21,16 @@ export const fetchAllUsers = async (props: FetchAllUsersProps) => {
         .select()
         .order(sortType, { ascending: order === 'asc' ? true : false })
         .range((pageNumber - 1) * 30, pageNumber * 30)
-    const finalQuery =
-        sortType === 'blackholed_at'
-            ? query.not('blackholed_at', 'is', null)
-            : query
 
-    const { data, error } = await finalQuery
+    if (sortType === 'blackholed_at') {
+        query.not('blackholed_at', 'is', null)
+    }
+
+    if (login) {
+        query.ilike('user ->> login', `%${login}%`)
+    }
+
+    const { data, error } = await query
     return { data, error }
 }
 
